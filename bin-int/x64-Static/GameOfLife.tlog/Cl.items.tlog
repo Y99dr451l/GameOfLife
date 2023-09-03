@@ -1,0 +1,10 @@
+C:\vs\GameOfLife\dep\OpenGL\ibo.cpp;C:\vs\GameOfLife\bin-int\x64-Static\ibo.obj
+C:\vs\GameOfLife\dep\OpenGL\renderer.cpp;C:\vs\GameOfLife\bin-int\x64-Static\renderer.obj
+C:\vs\GameOfLife\dep\OpenGL\shader.cpp;C:\vs\GameOfLife\bin-int\x64-Static\shader.obj
+C:\vs\GameOfLife\dep\OpenGL\texture.cpp;C:\vs\GameOfLife\bin-int\x64-Static\texture.obj
+C:\vs\GameOfLife\dep\OpenGL\vao.cpp;C:\vs\GameOfLife\bin-int\x64-Static\vao.obj
+C:\vs\GameOfLife\dep\OpenGL\vbl.cpp;C:\vs\GameOfLife\bin-int\x64-Static\vbl.obj
+C:\vs\GameOfLife\dep\OpenGL\vbo.cpp;C:\vs\GameOfLife\bin-int\x64-Static\vbo.obj
+C:\vs\GameOfLife\src\GameOfLife.cpp;C:\vs\GameOfLife\bin-int\x64-Static\GameOfLife.obj
+C:\vs\GameOfLife\src\Application.cpp;C:\vs\GameOfLife\bin-int\x64-Static\Application.obj
+C:\vs\GameOfLife\src\main.cpp;C:\vs\GameOfLife\bin-int\x64-Static\main.obj

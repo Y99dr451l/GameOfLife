@@ -1,0 +1,21 @@
+Application:
+- update
+- render
+- renderImGui
+- resize
+- getName
+- m_width, m_height
+
+AppLoader:
+- renderImGui override
+- addApp
+- m_currentApp, m_apps
+
+GameOfLife:
+- render override
+- resize override
+- countAliveCells
+- m_data, m_rresultData, m_size, GL IDs
+
+SerialCPU:
+- update override
