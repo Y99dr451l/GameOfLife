@@ -1,2 +1,0 @@
-C:\vs\GameOfLife\bin\x64-Debug\glfw3.dll
-C:\vs\GameOfLife\bin-int\x64-Debug\GameOfLife.vcxproj.CopyComplete
