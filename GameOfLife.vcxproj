@@ -197,9 +197,6 @@
     <ClInclude Include="src\SerialCPU.h" />
     <ClInclude Include="src\Application.h" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="src\GameOfLife.shader" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
