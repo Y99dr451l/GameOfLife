@@ -2,7 +2,7 @@
 #include "texture.h"
 
 Texture::Texture() : ID(-1), path(""), localBuffer(nullptr), width(0), height(0), BPP(0) {}
-Texture::Texture(size_t newWidth, size_t newHeight, const unsigned char* newData, GLuint format1, GLuint format2) : path(""), localBuffer(nullptr), BPP(0) {
+Texture::Texture(size_t newWidth, size_t newHeight, const unsigned char* newData, GLuint format1, GLuint format2) {
 	width = newWidth;
 	height = newHeight;
 	GLCall(glGenTextures(1, &ID));

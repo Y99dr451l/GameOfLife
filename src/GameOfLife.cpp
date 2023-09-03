@@ -7,14 +7,14 @@
 GameOfLife::GameOfLife(size_t width, size_t height) : Application(width, height), m_size(width * height) {
     std::cout << "GameOfLife()" << std::endl;
     m_name = "Game of Life";
-    m_data = new unsigned char[m_size];
-    m_resultData = new unsigned char[m_size];
+    m_data.resize(m_size);
+    m_resultData.resize(m_size);
     for (size_t i = 0; i < m_size; ++i) {
 		m_data[i] = rand() % 2 ? 1 : 0;
 		m_resultData[i] = 0;
 	}
 
-    auto vertexShaderSource = "#version 330 core\n"
+    auto vSource = "#version 330 core\n"
         "layout(location = 0) in vec2 aPos;"
         "layout(location = 1) in vec2 aTexCoord;"
         "out vec2 texCoord;"
@@ -22,7 +22,7 @@ GameOfLife::GameOfLife(size_t width, size_t height) : Application(width, height)
         "gl_Position = vec4(aPos, 0.f, 1.f);"
         "texCoord = aTexCoord;"
         "}";
-    auto fragmentShaderSource = "#version 330 core\n"
+    auto fSource = "#version 330 core\n"
 		"out vec4 color;"
 		"in vec2 texCoord;"
 		"uniform sampler2D tex;"
@@ -45,15 +45,10 @@ GameOfLife::GameOfLife(size_t width, size_t height) : Application(width, height)
     layout.push(GL_FLOAT, 2);
     m_vertexArray->addBuffer(*m_vertexBuffer, layout);
     m_indexBuffer = std::make_unique<IBO>(indices, 6);
-    m_texture = std::make_unique<Texture>(m_width, m_height, m_data, GL_RED, GL_RED);
-    m_shader = std::make_unique<Shader>("src/GameOfLife.shader");
+    if (m_data.size() == m_size) m_texture = std::make_unique<Texture>(m_width, m_height, m_data.data(), GL_RED, GL_RED);
+    m_shader = std::make_unique<Shader>(vSource, fSource, false);
     m_shader->bind();
     m_shader->setUniform1i("tex", 0);
-}
-
-GameOfLife::~GameOfLife() {
-	delete[] m_data;
-	delete[] m_resultData;
 }
 
 void GameOfLife::render() {
@@ -80,14 +75,12 @@ void GameOfLife::resize(int width, int height) {
     m_width = width;
     m_height = height;
     m_size = width * height;
-    delete[] m_data;
-    delete[] m_resultData;
-    m_data = new unsigned char[m_size];
-    m_resultData = new unsigned char[m_size];
+    m_data.resize(m_size);
+    m_resultData.resize(m_size);
     for (int i = 0; i < m_size; i++) {
         m_data[i] = rand() % 2;
     }
-    m_texture = std::make_unique<Texture>(m_width, m_height, m_data, GL_RED, GL_RED);
+    if (m_data.size() == m_size) m_texture = std::make_unique<Texture>(m_width, m_height, m_data.data(), GL_RED, GL_RED);
     m_texture->bind();
     m_shader->bind();
     m_shader->setUniform1i("tex", 0);

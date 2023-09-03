@@ -11,7 +11,7 @@ public:
         for (size_t i = 0; i < nThreads; ++i) pool.enqueue([&, i] { worker(nThreads, i); });
 		while (nWorkerComplete < nThreads) {}
         std::swap(m_data, m_resultData);
-        m_texture = std::make_unique<Texture>(m_width, m_height, m_data, GL_RED, GL_RED);
+		if (m_data.size() == m_size) m_texture = std::make_unique<Texture>(m_width, m_height, m_data.data(), GL_RED, GL_RED);
     }
     void worker(int nThreads, size_t id) {
 		for (size_t i = id; i < m_width; i += nThreads) {

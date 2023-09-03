@@ -27,7 +27,7 @@ public:
 	void renderImGui();
 	void resize(int width, int height) {
 		Application::resize(width, height);
-		m_currentApp->resize(width, height);
+		if (m_currentApp != this) m_currentApp->resize(width, height);
 	}
 	template<typename T>
 	void addApp(const std::string& name) {
