@@ -94,4 +94,7 @@
     </CudaCompile>
     <CudaCompile Include="src\BasicGPU.cu" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\GameOfLife.exe" />
+  </ItemGroup>
 </Project>

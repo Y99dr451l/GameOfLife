@@ -95,7 +95,7 @@
     <IntDir>$(SolutionDir)bin-int\$(Platform)-$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Static|x64'">
-    <OutDir>$(SolutionDir)bin\$(Platform)-$(Configuration)\</OutDir>
+    <OutDir>$(SolutionDir)bin\</OutDir>
     <IntDir>$(SolutionDir)bin-int\$(Platform)-$(Configuration)\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -161,15 +161,18 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Static|x64'">
     <ClCompile>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <AdditionalIncludeDirectories>$(SolutionDir)dep;C:\vcpkg\packages\glfw3_x64-windows-static\include;C:\vcpkg\packages\imgui_x64-windows-static\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)dep;C:\vcpkg\packages\glfw3_x64-windows-static\include;C:\vcpkg\packages\imgui_x64-windows-static\include;$(CudaToolkitIncludeDir)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
-      <AdditionalDependencies>msvcrt.lib;msvcmrt.lib;glfw3.lib;imgui.lib;opengl32.lib;gdi32.lib;user32.lib;kernel32.lib;shell32.lib</AdditionalDependencies>
+      <AdditionalDependencies>msvcrt.lib;msvcmrt.lib;glfw3.lib;imgui.lib;opengl32.lib;gdi32.lib;user32.lib;kernel32.lib;shell32.lib;cudart_static.lib</AdditionalDependencies>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
       <IgnoreSpecificDefaultLibraries>libcmt.lib;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
-      <AdditionalLibraryDirectories>C:\vcpkg\packages\glfw3_x64-windows-static\lib;C:\vcpkg\packages\imgui_x64-windows-static\lib</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\vcpkg\packages\glfw3_x64-windows-static\lib;C:\vcpkg\packages\imgui_x64-windows-static\lib;$(CudaToolkitLibDir)</AdditionalLibraryDirectories>
     </Link>
+    <CudaCompile>
+      <CompileOut>$(SolutionDir)bin-int\$(Platform)-$(Configuration)\%(Filename).%(Extension).obj</CompileOut>
+    </CudaCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="dep\OpenGL\ibo.cpp" />
@@ -200,6 +203,9 @@
     <ClInclude Include="src\ParallelCPU.h" />
     <ClInclude Include="src\SerialCPU.h" />
     <ClInclude Include="src\Application.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\GameOfLife.exe" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
