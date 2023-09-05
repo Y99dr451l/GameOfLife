@@ -6,26 +6,26 @@
 class Application {
 public:
 	Application() { m_name = "Application"; }
-	Application(size_t width, size_t height) : m_width(width), m_height(height) { m_name = "Application"; }
+	Application(unsigned int width, unsigned int height) : m_width(width), m_height(height) { m_name = "Application"; }
 	virtual ~Application() {}
 	virtual void update(float deltaTime) {}
 	virtual void render() {}
 	virtual void renderImGui() {}
 	virtual const char* getName() { return m_name.c_str(); }
-	virtual void resize(int width, int height) {
+	virtual void resize(unsigned int width, unsigned int height) {
 		m_width = width;
 		m_height = height;
 	}
 protected:
-	size_t m_width, m_height;
+	unsigned int m_width, m_height;
 	std::string m_name;
 };
 
 class AppLoader : public Application {
 public:
-	AppLoader(size_t width, size_t height, Application*& app);
+	AppLoader(unsigned int width, unsigned int height, Application*& app);
 	void renderImGui();
-	void resize(int width, int height) {
+	void resize(unsigned int width, unsigned int height) {
 		Application::resize(width, height);
 		if (m_currentApp != this) m_currentApp->resize(width, height);
 	}
