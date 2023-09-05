@@ -9,16 +9,15 @@
 #include "OpenGL/texture.h"
 #include "OpenGL/shader.h"
 
-class GameOfLife : public Application {
+class ArrayApp : public Application {
 public:
-	GameOfLife(size_t width, size_t height);
+	ArrayApp(unsigned int width, unsigned int height);
 	void render();
 	void renderImGui();
-	void resize(int width, int height);
+	void resize(unsigned int width, unsigned int height);
+	virtual void update(float deltaTime) {}
+	virtual void initData() {};
 protected:
-    inline unsigned char countAliveCells(size_t x0, size_t x1, size_t x2, size_t y0, size_t y1, size_t y2) {
-        return m_data[x0 + y0] + m_data[x1 + y0] + m_data[x2 + y0] + m_data[x0 + y1] + m_data[x2 + y1] + m_data[x0 + y2] + m_data[x1 + y2] + m_data[x2 + y2];
-    }
 	std::vector<unsigned char> m_data, m_resultData;
 	size_t m_size;
 	std::unique_ptr<VAO> m_vertexArray;

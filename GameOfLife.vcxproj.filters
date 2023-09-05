@@ -15,13 +15,10 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\Application.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\GameOfLife.cpp">
+    <ClCompile Include="src\ArrayApp.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="dep\OpenGL\ibo.cpp">
@@ -53,7 +50,7 @@
     <ClInclude Include="src\SerialCPU.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\GameOfLife.h">
+    <ClInclude Include="src\ArrayApp.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="dep\OpenGL\error.h">
@@ -89,5 +86,12 @@
     <ClInclude Include="src\ParallelCPU.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CudaCompile Include="src\BasicGPU.cuh" />
+    <CudaCompile Include="src\main.cu">
+      <Filter>Source Files</Filter>
+    </CudaCompile>
+    <CudaCompile Include="src\BasicGPU.cu" />
   </ItemGroup>
 </Project>

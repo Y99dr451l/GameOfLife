@@ -8,6 +8,7 @@
 #include "Application.h"
 #include "SerialCPU.h"
 #include "ParallelCPU.h"
+#include "BasicGPU.cuh"
 
 #define WIDTH 800
 #define HEIGHT 600
@@ -48,16 +49,18 @@ int main() {
 		ImGui_ImplGlfw_InitForOpenGL(window, true);
 		ImGui_ImplOpenGL3_Init("#version 330");
 		ImGui::StyleColorsDark();
+		ImGui::GetIO().IniFilename = NULL;
 
 		Application* currentApp = nullptr;
 		menu = new AppLoader(WIDTH, HEIGHT, currentApp);
 		currentApp = menu;
 		menu->addApp<SerialCPU>("Serial CPU");
 		menu->addApp<ParallelCPU>("Parallel CPU");
+		menu->addApp<BasicGPU>("Basic GPU");
 
 		while (!glfwWindowShouldClose(window)) {
 			glfwPollEvents();
-			processInput(window);
+			//processInput(window);
 			glClear(GL_COLOR_BUFFER_BIT);
 
 			ImGui_ImplOpenGL3_NewFrame();
