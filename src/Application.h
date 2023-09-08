@@ -25,8 +25,8 @@ public:
 		if (m_zoom > 10.0f) m_zoom = 10.0f;
 	}
 	void addOffset(float x, float y) {
-		m_x += x / m_width;
-		m_y += y / m_height;
+		m_x -= x / m_width * m_zoom;
+		m_y += y / m_height * m_zoom;
 	}
 protected:
 	unsigned int m_width, m_height;

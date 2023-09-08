@@ -6,23 +6,24 @@
 
 ArrayApp::ArrayApp(unsigned int width, unsigned int height) : Application(width, height), m_size(width * height) {
     m_name = "Array Application";
+    m_x = 0.5f, m_y = 0.5f;
 
     auto vSource = "#version 330 core\n"
         "layout(location = 0) in vec2 aPos;"
         "layout(location = 1) in vec2 aTexCoord;"
         "out vec2 texCoord;"
+        "uniform float zoom;"
+        "uniform vec2 offset;"
         "void main() {"
         "gl_Position = vec4(aPos, 0.f, 1.f);"
-        "texCoord = aTexCoord;"
+        "texCoord = (aTexCoord - vec2(.5f)) * zoom + vec2(.5f) + offset;"
         "}";
     auto fSource = "#version 330 core\n"
 		"out vec4 color;"
 		"in vec2 texCoord;"
 		"uniform sampler2D tex;"
-        "uniform float zoom;"
-        "uniform vec2 offset;"
 		"void main() {"
-		"color = texture(tex, (texCoord - vec2(0.5f) + offset) * zoom + vec2(0.5f));"
+		"color = texture(tex, texCoord);"
 		"color = 255.f * vec4(color.xxx, 1.f);"
 		"}";
     GLfloat points[] = {
@@ -62,9 +63,17 @@ void ArrayApp::render() {
 }
 
 void ArrayApp::renderImGui() {
+    ImGui::SameLine();
     float fr = ImGui::GetIO().Framerate;
     ImGui::Text("%.3f ms/frame (%.1f FPS)", 1000.0f / fr, fr);
-    if (ImGui::Button("Reset")) initData();
+    ImGui::Text("Offset: x = %.3f, y = %.3f", m_x, m_y);
+    ImGui::Text("Zoom: %.3f", m_zoom);
+    if (ImGui::Button("Randomise field")) initData();
+    ImGui::SameLine();
+    if (ImGui::Button("Reset view")) {
+		m_x = 0.5f, m_y = 0.5f;
+		m_zoom = 1.f;
+	}
 }
 
 void ArrayApp::resize(unsigned int width, unsigned int height) {
@@ -73,7 +82,4 @@ void ArrayApp::resize(unsigned int width, unsigned int height) {
     m_size = width * height;
     m_texture->setSize(width, height);
     initData();
-    /*m_texture->bind();
-    m_shader->bind();
-    m_shader->setUniform1i("tex", 0);*/
 }

@@ -39,7 +39,7 @@ void mouse_callback(GLFWwindow* window, int button, int action, int mods) {
 
 void cursor_callback(GLFWwindow* window, double xpos, double ypos) {
 	if (isDragging) {
-		menu->getCurrentApp()->addOffset(-xpos + dragStartX, ypos - dragStartY);
+		menu->getCurrentApp()->addOffset(xpos - dragStartX, ypos - dragStartY);
 		dragStartX = xpos;
 		dragStartY = ypos;
 	}
