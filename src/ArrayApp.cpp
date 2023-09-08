@@ -19,8 +19,10 @@ ArrayApp::ArrayApp(unsigned int width, unsigned int height) : Application(width,
 		"out vec4 color;"
 		"in vec2 texCoord;"
 		"uniform sampler2D tex;"
+        "uniform float zoom;"
+        "uniform vec2 offset;"
 		"void main() {"
-		"color = texture(tex, texCoord);"
+		"color = texture(tex, (texCoord - vec2(0.5f) + offset) * zoom + vec2(0.5f));"
 		"color = 255.f * vec4(color.xxx, 1.f);"
 		"}";
     GLfloat points[] = {
@@ -41,29 +43,37 @@ ArrayApp::ArrayApp(unsigned int width, unsigned int height) : Application(width,
     m_shader = std::make_unique<Shader>(vSource, fSource, false);
     m_shader->bind();
     m_shader->setUniform1i("tex", 0);
+
+    m_texture = std::make_unique<Texture>(m_width, m_height, GL_RED, GL_RED, GL_UNSIGNED_BYTE);
+    m_texture->bind();
+    m_texture->setFilters(GL_LINEAR, GL_NEAREST);
+    m_texture->setWrapping(GL_REPEAT);
+    GLCall(glClearColor(0.f, 0.f, 0.f, 0.f));
 }
 
 void ArrayApp::render() {
-    //GLCall(glClearColor(0.f, 0.f, 0.f, 0.f));
-    //GLCall(glClear(GL_COLOR_BUFFER_BIT));
+    GLCall(glClear(GL_COLOR_BUFFER_BIT));
     m_texture->bind();
     m_shader->bind();
+    m_shader->setUniform1f("zoom", m_zoom);
+    m_shader->setUniform2f("offset", m_x, m_y);
     Renderer renderer;
     renderer.draw(*m_vertexArray, *m_indexBuffer, *m_shader);
 }
 
 void ArrayApp::renderImGui() {
-    ImGui::Text("Frame time: %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+    float fr = ImGui::GetIO().Framerate;
+    ImGui::Text("%.3f ms/frame (%.1f FPS)", 1000.0f / fr, fr);
+    if (ImGui::Button("Reset")) initData();
 }
 
 void ArrayApp::resize(unsigned int width, unsigned int height) {
     std::cout << "Resizing to " << width << "x" << height << std::endl;
-    m_width = width;
-    m_height = height;
+    m_width = width, m_height = height;
     m_size = width * height;
-    this->initData();
-    if (m_data.size() == m_size) m_texture = std::make_unique<Texture>(m_width, m_height, m_data.data(), GL_RED, GL_RED);
-    m_texture->bind();
+    m_texture->setSize(width, height);
+    initData();
+    /*m_texture->bind();
     m_shader->bind();
-    m_shader->setUniform1i("tex", 0);
+    m_shader->setUniform1i("tex", 0);*/
 }

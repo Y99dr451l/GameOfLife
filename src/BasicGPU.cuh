@@ -15,19 +15,21 @@ public:
     }
     ~BasicGPU() {
         cleanupCuda();
+        delete d_data;
+        delete d_resultData;
     }
 
     void update(float deltaTime) override {
         cudaMemcpy(d_data, m_data.data(), dataBytes, cudaMemcpyHostToDevice);
         unsigned char* m_datap = m_data.data();
         runCudaSimulation(m_width, m_height, m_datap, d_data, d_resultData, dataBytes);
-        if (m_data.size() == m_size) m_texture = std::make_unique<Texture>(m_width, m_height, m_data.data(), GL_RED, GL_RED);
+        if (m_data.size() == m_size) m_texture->setData(m_data.data());
     }
 
     void initData() {
         m_data.resize(m_size); // m_resultData is unused
         for (size_t i = 0; i < m_size; ++i) m_data[i] = mt() % 2;
-        m_texture = std::make_unique<Texture>(m_width, m_height, m_data.data(), GL_RED, GL_RED);
+        if (m_data.size() == m_size) m_texture->setData(m_data.data());
     }
 
     void resize(unsigned int width, unsigned int height) override {

@@ -12,11 +12,20 @@
 class ArrayApp : public Application {
 public:
 	ArrayApp(unsigned int width, unsigned int height);
+	~ArrayApp() {
+		m_vertexArray.reset();
+		m_vertexBuffer.reset();
+		m_indexBuffer.reset();
+		m_texture.reset();
+		m_shader.reset();
+		m_data.clear();
+		m_resultData.clear();
+	}
 	void render();
 	void renderImGui();
 	void resize(unsigned int width, unsigned int height);
 	virtual void update(float deltaTime) {}
-	virtual void initData() {};
+	virtual void initData() {}
 protected:
 	std::vector<unsigned char> m_data, m_resultData;
 	size_t m_size;

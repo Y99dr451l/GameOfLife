@@ -22,7 +22,7 @@ public:
             }
         }
         std::swap(m_data, m_resultData);
-        if (m_data.size() == m_size) m_texture = std::make_unique<Texture>(m_width, m_height, m_data.data(), GL_RED, GL_RED);
+        if (m_data.size() == m_size) m_texture->setData(m_data.data());
 	}
     void initData() {
 		m_data.resize(m_size);
@@ -31,7 +31,7 @@ public:
 			m_data[i] = mt() % 2;
             m_resultData[i] = 0;
 		}
-        m_texture = std::make_unique<Texture>(m_width, m_height, m_data.data(), GL_RED, GL_RED);
+        m_texture->setData(m_data.data());
 	}
 private:
     inline unsigned char countAliveCells(unsigned int x0, unsigned int x1, unsigned int x2, unsigned int y0, unsigned int y1, unsigned int y2) {

@@ -26,8 +26,11 @@ public:
 	unsigned int createShader(ShaderSource src);
 
 	int getUniformLocation(const std::string& name) const;
-	void setUniform1i(const std::string& name, int value) const;
-	void setUniform1f(const std::string& name, float value) const;
+	void setUniform1i(const std::string& name, int v0) const;
+	void setUniform2i(const std::string& name, int v0, int v1) const;
+	void setUniform1f(const std::string& name, float v0) const;
+	void setUniform2f(const std::string& name, float v0, float v1) const;
+	void setUniform3f(const std::string& name, float v0, float v1, float v2) const;
 	void setUniform4f(const std::string& name, float v0, float v1, float v2, float v3) const;
 	void setUniformMat4f(const std::string& name, const glm::mat4& matrix) const;
 

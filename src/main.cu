@@ -14,10 +14,35 @@
 #define HEIGHT 600
 
 static AppLoader* menu = nullptr;
+static double dragStartX, dragStartY;
+static bool isDragging = false;
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
 	glViewport(0, 0, width, height);
 	menu->resize(width, height);
+}
+
+void scroll_callback(GLFWwindow* window, double xoffset, double yoffset) {
+	float zFactor = 1.f - yoffset * 0.1f;
+	menu->getCurrentApp()->zoom(zFactor);
+}
+
+void mouse_callback(GLFWwindow* window, int button, int action, int mods) {
+	if (button == GLFW_MOUSE_BUTTON_LEFT) {
+		if (action == GLFW_PRESS) {
+			isDragging = true;
+			glfwGetCursorPos(window, &dragStartX, &dragStartY);
+		}
+		else if (action == GLFW_RELEASE) isDragging = false;
+	}
+}
+
+void cursor_callback(GLFWwindow* window, double xpos, double ypos) {
+	if (isDragging) {
+		menu->getCurrentApp()->addOffset(-xpos + dragStartX, ypos - dragStartY);
+		dragStartX = xpos;
+		dragStartY = ypos;
+	}
 }
 
 void processInput(GLFWwindow* window) {
@@ -40,6 +65,9 @@ int main() {
 
 	glfwMakeContextCurrent(window);
 	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
+	glfwSetScrollCallback(window, scroll_callback);
+	glfwSetMouseButtonCallback(window, mouse_callback);
+	glfwSetCursorPosCallback(window, cursor_callback);
 	glfwSwapInterval(0);
 	gladLoadGL();
 
@@ -59,9 +87,9 @@ int main() {
 		menu->addApp<BasicGPU>("Basic GPU");
 
 		while (!glfwWindowShouldClose(window)) {
-			glfwPollEvents();
-			//processInput(window);
 			glClear(GL_COLOR_BUFFER_BIT);
+			glfwPollEvents();
+			processInput(window);
 
 			ImGui_ImplOpenGL3_NewFrame();
 			ImGui_ImplGlfw_NewFrame();
