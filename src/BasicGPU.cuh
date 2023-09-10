@@ -2,13 +2,13 @@
 #include <random>
 #include <cuda_runtime.h>
 #include <device_launch_parameters.h>
-#include "ArrayApp.h"
+#include "GameOfLife.h"
 
 void runCudaSimulation(unsigned int width, unsigned int height, unsigned char* m_data, unsigned char* d_data, unsigned char* d_resultData, size_t dataBytes);
 
-class BasicGPU : public ArrayApp {
+class BasicGPU : public GameOfLife {
 public:
-    BasicGPU(unsigned int width, unsigned int height) : ArrayApp(width, height) {
+    BasicGPU(unsigned int width, unsigned int height) : GameOfLife(width, height) {
         m_name = "GPU Game of Life";
         initData();
         initializeCuda();
@@ -23,7 +23,6 @@ public:
         cudaMemcpy(d_data, m_data.data(), dataBytes, cudaMemcpyHostToDevice);
         unsigned char* m_datap = m_data.data();
         runCudaSimulation(m_width, m_height, m_datap, d_data, d_resultData, dataBytes);
-        if (m_data.size() == m_size) m_texture->setData(m_data.data());
     }
 
     void initData() {
@@ -33,7 +32,7 @@ public:
     }
 
     void resize(unsigned int width, unsigned int height) override {
-        ArrayApp::resize(width, height);
+        GameOfLife::resize(width, height);
 		cleanupCuda();
 		initializeCuda();
     }

@@ -1,6 +1,5 @@
 #pragma once
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
+#include "OpenGL/OpenGL.h"
 #include <iostream>
 #include "Application.h"
 #include "OpenGL/vao.h"
@@ -9,10 +8,16 @@
 #include "OpenGL/texture.h"
 #include "OpenGL/shader.h"
 
-class ArrayApp : public Application {
+struct Pattern {
+	std::string name;
+	size_t width, height;
+	std::vector<unsigned char> data;
+};
+
+class GameOfLife : public Application {
 public:
-	ArrayApp(unsigned int width, unsigned int height);
-	~ArrayApp() {
+	GameOfLife(unsigned int width, unsigned int height);
+	~GameOfLife() {
 		m_vertexArray.reset();
 		m_vertexBuffer.reset();
 		m_indexBuffer.reset();
@@ -34,4 +39,6 @@ protected:
 	std::unique_ptr<IBO> m_indexBuffer;
 	std::unique_ptr<Texture> m_texture;
 	std::unique_ptr<Shader> m_shader;
+	std::vector<Pattern> m_patterns;
+	Pattern* m_selectedPattern;
 };

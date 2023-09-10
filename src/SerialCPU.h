@@ -1,11 +1,11 @@
 #pragma once
 #include <ctime>
 #include <random>
-#include "ArrayApp.h"
+#include "GameOfLife.h"
 
-class SerialCPU : public ArrayApp {
+class SerialCPU : public GameOfLife {
 public:
-	SerialCPU(unsigned int width, unsigned int height) : ArrayApp(width, height) {
+	SerialCPU(unsigned int width, unsigned int height) : GameOfLife(width, height) {
         m_name = "Serial CPU";
         initData();
     }
@@ -22,7 +22,6 @@ public:
             }
         }
         std::swap(m_data, m_resultData);
-        if (m_data.size() == m_size) m_texture->setData(m_data.data());
 	}
     void initData() {
 		m_data.resize(m_size);

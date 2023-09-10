@@ -182,7 +182,7 @@
     <ClCompile Include="dep\OpenGL\vao.cpp" />
     <ClCompile Include="dep\OpenGL\vbl.cpp" />
     <ClCompile Include="dep\OpenGL\vbo.cpp" />
-    <ClCompile Include="src\ArrayApp.cpp" />
+    <ClCompile Include="src\GameOfLife.cpp" />
     <ClCompile Include="src\Application.cpp" />
     <CudaCompile Include="src\BasicGPU.cu" />
     <CudaCompile Include="src\main.cu" />
@@ -198,7 +198,7 @@
     <ClInclude Include="dep\OpenGL\vbl.h" />
     <ClInclude Include="dep\OpenGL\vbo.h" />
     <ClInclude Include="dep\threadpool.h" />
-    <ClInclude Include="src\ArrayApp.h" />
+    <ClInclude Include="src\GameOfLife.h" />
     <CudaCompile Include="src\BasicGPU.cuh" />
     <ClInclude Include="src\ParallelCPU.h" />
     <ClInclude Include="src\SerialCPU.h" />

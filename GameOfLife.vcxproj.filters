@@ -18,7 +18,7 @@
     <ClCompile Include="src\Application.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\ArrayApp.cpp">
+    <ClCompile Include="src\GameOfLife.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="dep\OpenGL\ibo.cpp">
@@ -50,7 +50,7 @@
     <ClInclude Include="src\SerialCPU.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\ArrayApp.h">
+    <ClInclude Include="src\GameOfLife.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="dep\OpenGL\error.h">

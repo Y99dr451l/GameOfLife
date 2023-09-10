@@ -1,12 +1,12 @@
 #pragma once
 #include <ctime>
 #include <random>
-#include "ArrayApp.h"
+#include "GameOfLife.h"
 #include "threadpool.h"
 
-class ParallelCPU : public ArrayApp {
+class ParallelCPU : public GameOfLife {
 public:
-    ParallelCPU(unsigned int width, unsigned int height) : ArrayApp(width, height), nWorkerComplete(0), nThreads(std::thread::hardware_concurrency()), pool(nThreads) {
+    ParallelCPU(unsigned int width, unsigned int height) : GameOfLife(width, height), nWorkerComplete(0), nThreads(std::thread::hardware_concurrency()), pool(nThreads) {
 		m_name = "Parallel CPU";
 		initData();
 	}
@@ -15,7 +15,6 @@ public:
         for (unsigned int i = 0; i < nThreads; ++i) pool.enqueue([&, i] { worker(nThreads, i); });
 		while (nWorkerComplete < nThreads) {}
         std::swap(m_data, m_resultData);
-		if (m_data.size() == m_size) m_texture->setData(m_data.data());
     }
     void worker(int nThreads, unsigned int id) {
 		for (unsigned int i = id; i < m_width; i += nThreads) {
