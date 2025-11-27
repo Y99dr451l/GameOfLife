@@ -8,7 +8,9 @@
 #include "Application.h"
 #include "SerialCPU.h"
 #include "ParallelCPU.h"
+#ifdef USE_CUDA
 #include "BasicGPU.cuh"
+#endif
 
 #define WIDTH 800
 #define HEIGHT 600
@@ -84,7 +86,9 @@ int main() {
 		currentApp = menu;
 		menu->addApp<SerialCPU>("Serial CPU");
 		menu->addApp<ParallelCPU>("Parallel CPU");
+		#ifdef USE_CUDA
 		menu->addApp<BasicGPU>("Basic GPU");
+		#endif
 
 		while (!glfwWindowShouldClose(window)) {
 			glClear(GL_COLOR_BUFFER_BIT);

@@ -59,14 +59,14 @@ GameOfLife::GameOfLife(unsigned int width, unsigned int height) : Application(wi
 void GameOfLife::render() {
     if (m_data.size() == m_size) m_texture->setData(m_data.data());
     if (m_selectedPattern) {
-        unsigned int w = m_selectedPattern->width, h = m_selectedPattern->height;
+        size_t w = m_selectedPattern->width, h = m_selectedPattern->height;
         auto io = ImGui::GetIO();
         float mx = io.MousePos.x, my = m_height - io.MousePos.y;
         float x = (mx / m_width - .5f) * m_zoom + m_offsetX;
         float y = (my / m_height - .5f) * m_zoom + m_offsetY;
         x = (int)(x * m_width) % m_width, y = (int)(y * m_height) % m_height;
         m_texture->bind();
-        glTexSubImage2D(GL_TEXTURE_2D, 0, (int)x, (int)y, w, h, GL_RED, GL_UNSIGNED_BYTE, m_selectedPattern->data.data());
+        glTexSubImage2D(GL_TEXTURE_2D, 0, (int)x, (int)y, (GLsizei)w, (GLsizei)h, GL_RED, GL_UNSIGNED_BYTE, m_selectedPattern->data.data());
         if (ImGui::IsMouseClicked(1)) {
             for (unsigned int i = 0; i < w; ++i)
                 for (unsigned int j = 0; j < h; ++j) {
@@ -109,7 +109,7 @@ void GameOfLife::renderImGui() {
     ImGui::Separator();
 
     ImGui::Text("Selected pattern: %s", m_selectedPattern ? m_selectedPattern->name.c_str() : "None");
-    if (ImGui::BeginListBox("")) {
+    if (ImGui::BeginListBox("##")) {
         for (auto& pattern : m_patterns) {
             bool selected = &pattern == m_selectedPattern;
             if (ImGui::Selectable(pattern.name.c_str(), selected)) m_selectedPattern = &pattern;
